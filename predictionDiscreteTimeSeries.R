@@ -26,5 +26,17 @@ prediction <- function(x,k){
   return (mean(abs(predicted-x[(k+1):n])))
 }
 
+prediction2 <- function(x,k){
+  n <- length(x)
+  threshold <- k/2
+  pred <- vector(length=n-k)
+  csx <- c(0,cumsum(x))
+  for (i in 1:(n-k)){
+    if (csx[i+k] - csx[i] >= threshold) 
+      pred[i] <- 1 else pred[i] <- 0
+  }
+  return (mean(abs(pred-x[(k+1):n])))
+}
 # test run
 prediction(c(0,1,1,1,1,0,0,1,1), k=4)
+prediction2(c(0,1,1,1,1,0,0,1,1), k=4)
