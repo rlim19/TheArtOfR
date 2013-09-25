@@ -1,0 +1,399 @@
+\documentclass{article}\usepackage{graphicx, color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\definecolor{fgcolor}{rgb}{0.2, 0.2, 0.2}
+\newcommand{\hlnumber}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlfunctioncall}[1]{\textcolor[rgb]{0.501960784313725,0,0.329411764705882}{\textbf{#1}}}%
+\newcommand{\hlstring}[1]{\textcolor[rgb]{0.6,0.6,1}{#1}}%
+\newcommand{\hlkeyword}[1]{\textcolor[rgb]{0,0,0}{\textbf{#1}}}%
+\newcommand{\hlargument}[1]{\textcolor[rgb]{0.690196078431373,0.250980392156863,0.0196078431372549}{#1}}%
+\newcommand{\hlcomment}[1]{\textcolor[rgb]{0.180392156862745,0.6,0.341176470588235}{#1}}%
+\newcommand{\hlroxygencomment}[1]{\textcolor[rgb]{0.43921568627451,0.47843137254902,0.701960784313725}{#1}}%
+\newcommand{\hlformalargs}[1]{\textcolor[rgb]{0.690196078431373,0.250980392156863,0.0196078431372549}{#1}}%
+\newcommand{\hleqformalargs}[1]{\textcolor[rgb]{0.690196078431373,0.250980392156863,0.0196078431372549}{#1}}%
+\newcommand{\hlassignement}[1]{\textcolor[rgb]{0,0,0}{\textbf{#1}}}%
+\newcommand{\hlpackage}[1]{\textcolor[rgb]{0.588235294117647,0.709803921568627,0.145098039215686}{#1}}%
+\newcommand{\hlslot}[1]{\textit{#1}}%
+\newcommand{\hlsymbol}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlprompt}[1]{\textcolor[rgb]{0.2,0.2,0.2}{#1}}%
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\usepackage[sc]{mathpazo}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2.5cm,bmargin=2.5cm,lmargin=2.5cm,rmargin=2.5cm}
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{2}
+\usepackage{url}
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=true,bookmarksopen=true,bookmarksopenlevel=2,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
+ {hyperref}
+\hypersetup{
+ pdfstartview={XYZ null null 1}}
+\usepackage{breakurl}
+\begin{document}
+
+
+
+
+\author{Ricky Lim}
+\title{Salary Study 2006}
+\maketitle
+
+\begin{verbatim}
+  Filename: salaryStudy.Rnw 
+  Working directory: /Users/RickyLim/Dropbox/LearnR/theArtOfR/salaryStudy 
+\end{verbatim}
+
+\section{Data Mining}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+
+\hlcomment{# download source: - http://www.flcdatacenter.com/download/Perm_FY2006_TEXT.zip zip file}
+\hlcomment{# stored in input/}
+
+rawData <- \hlfunctioncall{unzip}(\hlstring{"input/Perm_FY2006_TEXT.zip"})
+all2006 <- \hlfunctioncall{read.csv}(rawData, as.is = TRUE, header = TRUE)
+\hlfunctioncall{head}(all2006)
+\end{alltt}
+\begin{verbatim}
+##         Case_No         Processing_Center Final_Case_Status     Received_Date
+## 1 A-05243-28497 Atlanta Processing Center            Denied 10/1/2005 0:00:00
+## 2 A-05275-38245 Atlanta Processing Center            Denied 10/2/2005 0:00:00
+## 3 A-05263-34450 Atlanta Processing Center            Denied 10/2/2005 0:00:00
+## 4 A-05273-38122 Atlanta Processing Center            Denied 10/2/2005 0:00:00
+## 5 C-05265-35535 Chicago Processing Center            Denied 10/2/2005 0:00:00
+## 6 C-05275-38256 Chicago Processing Center            Denied 10/2/2005 0:00:00
+##   Certified_Date        Denied_Date                               Employer_Name
+## 1                10/1/2005 10:00:32                          QAMAR UL ZAMAN, MD
+## 2                 10/2/2005 2:48:59                      HYGIA INDUSTRIES, INC.
+## 3                 10/2/2005 3:49:09 TRI-SEASON LANDSCAPE & BOULDER COUNTRUCTION
+## 4                 10/2/2005 9:50:15                          NIPPON EXPRESS USA
+## 5                10/2/2005 12:35:50                        VERNON FAIRCHILD JR.
+## 6                10/2/2005 13:51:05                        VERNON FAIRCHILD JR.
+##     Employer_Address_1 Employer_Address_2 Employer_City Employer_State
+## 1 1035 RICHWOOD AVENUE                       CUMBERLAND       MARYLAND
+## 2               BOX 25                          TALLMAN       NEW YORK
+## 3   2260 SUNRISE COURT                    SCOTCH PLAINS     NEW JERSEY
+## 4     590 MADISON AVE.         SUITE 2401      NEW YORK       NEW YORK
+## 5 4297 NORTH 1400 EAST                             BUHL          IDAHO
+## 6 4297 NORTH 1400 EAST                             BUHL          IDAHO
+##   Employer_Postal_Code Alien_Citizenship_Country                    Employer_Job_Title
+## 1                21502                  PAKISTAN Hematologist / Oncologist / Internist
+## 2           10982-0025                    POLAND                   COMPUTER PROGRAMMER
+## 3                 7076                   ECUADOR                            LANDSCAPER
+## 4                10022                     JAPAN          Senior Logistics Coordinator
+## 5                83316               NEW ZEALAND             Sheep Shearer-Crew Leader
+## 6                83316               NEW ZEALAND             Sheep Shearer Crew Leader
+##   Wage_Offered_From Wage_Offered_To Wage_Per            Prevailing_Wage_Job_Title
+## 1        $178000.00                     Year                            Physician
+## 2            $29.52                     Year                  COMPUTER PROGRAMMER
+## 3            $13.35                     Hour LANDSCAPING & GROUNDSKEEPING WORKERS
+## 4         $62000.00                     Year         Senior Logistics Coordinator
+## 5             $1.70                     Hour            Sheep Shearer-Crew Leader
+## 6             $1.70                     Hour            Sheep Shearer-Crew Leader
+##   Prevailing_Wage_Amount Prevailing_Wage_Level Prevailing_Wage_SOC_CODE
+## 1             $163800.00             Level III               29-1062.00
+## 2                 $29.52              Level II               15-1021.00
+## 3                 $13.35              Level IV               37-3011.00
+## 4              $61818.00              Level II               11-3071.01
+## 5                  $8.69               Level I               45-2093.00
+## 6                  $8.69               Level I               45-2093.00
+##                Prevailing_Wage_SOC_Title Prevailing_Wage_Source
+## 1       Family and General Practitioners                    OES
+## 2                   Computer Programmers                    OES
+## 3 Landscaping and Groundskeeping Workers                    OES
+## 4                Transportation Managers                    OES
+## 5    Farmworkers, Farm and Ranch Animals                  Other
+## 6    Farmworkers, Farm and Ranch Animals                  Other
+##   Prevailing_Wage_Other_Source
+## 1                             
+## 2                             
+## 3                             
+## 4                             
+## 5   Prevailing Wage Specialist
+## 6    prevailig wage specialist
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\section{Data Processing}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcomment{# cleaning}
+all2006 <- \hlfunctioncall{within}(all2006, \{
+    Wage_Offered_From <- \hlfunctioncall{as.numeric}(\hlfunctioncall{gsub}(\hlstring{"\textbackslash{}\textbackslash{}$"}, \hlstring{""}, Wage_Offered_From))
+    Prevailing_Wage_Amount <- \hlfunctioncall{as.numeric}(\hlfunctioncall{gsub}(\hlstring{"\textbackslash{}\textbackslash{}$"}, \hlstring{""}, Prevailing_Wage_Amount))
+    rat <- Wage_Offered_From/Prevailing_Wage_Amount
+\})
+
+\hlfunctioncall{head}(all2006)
+\end{alltt}
+\begin{verbatim}
+##         Case_No         Processing_Center Final_Case_Status     Received_Date
+## 1 A-05243-28497 Atlanta Processing Center            Denied 10/1/2005 0:00:00
+## 2 A-05275-38245 Atlanta Processing Center            Denied 10/2/2005 0:00:00
+## 3 A-05263-34450 Atlanta Processing Center            Denied 10/2/2005 0:00:00
+## 4 A-05273-38122 Atlanta Processing Center            Denied 10/2/2005 0:00:00
+## 5 C-05265-35535 Chicago Processing Center            Denied 10/2/2005 0:00:00
+## 6 C-05275-38256 Chicago Processing Center            Denied 10/2/2005 0:00:00
+##   Certified_Date        Denied_Date                               Employer_Name
+## 1                10/1/2005 10:00:32                          QAMAR UL ZAMAN, MD
+## 2                 10/2/2005 2:48:59                      HYGIA INDUSTRIES, INC.
+## 3                 10/2/2005 3:49:09 TRI-SEASON LANDSCAPE & BOULDER COUNTRUCTION
+## 4                 10/2/2005 9:50:15                          NIPPON EXPRESS USA
+## 5                10/2/2005 12:35:50                        VERNON FAIRCHILD JR.
+## 6                10/2/2005 13:51:05                        VERNON FAIRCHILD JR.
+##     Employer_Address_1 Employer_Address_2 Employer_City Employer_State
+## 1 1035 RICHWOOD AVENUE                       CUMBERLAND       MARYLAND
+## 2               BOX 25                          TALLMAN       NEW YORK
+## 3   2260 SUNRISE COURT                    SCOTCH PLAINS     NEW JERSEY
+## 4     590 MADISON AVE.         SUITE 2401      NEW YORK       NEW YORK
+## 5 4297 NORTH 1400 EAST                             BUHL          IDAHO
+## 6 4297 NORTH 1400 EAST                             BUHL          IDAHO
+##   Employer_Postal_Code Alien_Citizenship_Country                    Employer_Job_Title
+## 1                21502                  PAKISTAN Hematologist / Oncologist / Internist
+## 2           10982-0025                    POLAND                   COMPUTER PROGRAMMER
+## 3                 7076                   ECUADOR                            LANDSCAPER
+## 4                10022                     JAPAN          Senior Logistics Coordinator
+## 5                83316               NEW ZEALAND             Sheep Shearer-Crew Leader
+## 6                83316               NEW ZEALAND             Sheep Shearer Crew Leader
+##   Wage_Offered_From Wage_Offered_To Wage_Per            Prevailing_Wage_Job_Title
+## 1         178000.00                     Year                            Physician
+## 2             29.52                     Year                  COMPUTER PROGRAMMER
+## 3             13.35                     Hour LANDSCAPING & GROUNDSKEEPING WORKERS
+## 4          62000.00                     Year         Senior Logistics Coordinator
+## 5              1.70                     Hour            Sheep Shearer-Crew Leader
+## 6              1.70                     Hour            Sheep Shearer-Crew Leader
+##   Prevailing_Wage_Amount Prevailing_Wage_Level Prevailing_Wage_SOC_CODE
+## 1              163800.00             Level III               29-1062.00
+## 2                  29.52              Level II               15-1021.00
+## 3                  13.35              Level IV               37-3011.00
+## 4               61818.00              Level II               11-3071.01
+## 5                   8.69               Level I               45-2093.00
+## 6                   8.69               Level I               45-2093.00
+##                Prevailing_Wage_SOC_Title Prevailing_Wage_Source
+## 1       Family and General Practitioners                    OES
+## 2                   Computer Programmers                    OES
+## 3 Landscaping and Groundskeeping Workers                    OES
+## 4                Transportation Managers                    OES
+## 5    Farmworkers, Farm and Ranch Animals                  Other
+## 6    Farmworkers, Farm and Ranch Animals                  Other
+##   Prevailing_Wage_Other_Source    rat
+## 1                              1.0867
+## 2                              1.0000
+## 3                              1.0000
+## 4                              1.0029
+## 5   Prevailing Wage Specialist 0.1956
+## 6    prevailig wage specialist 0.1956
+\end{verbatim}
+\begin{alltt}
+
+\hlcomment{# filtering}
+all2006 <- \hlfunctioncall{subset}(all2006, Wage_Per == \hlstring{"Year"} & Wage_Offered_From > 20000 & Prevailing_Wage_Amount > 
+    200)
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+\section{Selection of dataframes}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcomment{# selection based on professions}
+se2006 <- \hlfunctioncall{subset}(all2006, \hlfunctioncall{grepl}(\hlstring{"Software Engineer"}, Prevailing_Wage_Job_Title))
+prg2006 <- \hlfunctioncall{subset}(all2006, \hlfunctioncall{grepl}(\hlstring{"Programmer"}, Prevailing_Wage_Job_Title))
+ee2006 <- \hlfunctioncall{subset}(all2006, \hlfunctioncall{grepl}(\hlstring{"Electronics Engineer"}, Prevailing_Wage_Job_Title))
+
+
+
+medRat <- \hlfunctioncall{function}(dataFrame) \{
+    \hlfunctioncall{return}(\hlfunctioncall{median}(dataFrame$rat, na.rm = TRUE))
+\}
+
+makeCorp <- \hlfunctioncall{function}(corpName) \{
+    \hlfunctioncall{return}(\hlfunctioncall{subset}(all2006, Employer_Name == corpName))
+\}
+
+\hlcomment{# selection based on corporates iteratively make an object iterativey e.g employer}
+\hlcomment{# microsoft corporation as ms2006}
+corpList <- \hlfunctioncall{c}(\hlstring{"MICROSOFT CORPORATION"}, \hlstring{"ms"}, \hlstring{"INTEL CORPORATION"}, \hlstring{"intel"}, \hlstring{"SUN MICROSYSTEMS, INC."}, 
+    \hlstring{"sun"}, \hlstring{"GOOGLE INC."}, \hlstring{"google"})
+
+\hlfunctioncall{for} (i in 1:(\hlfunctioncall{length}(corpList)/2)) \{
+    corp <- corpList[2 * i - 1]
+    newdtf <- \hlfunctioncall{paste}(corpList[2 * i], \hlstring{"2006"}, sep = \hlstring{""})
+    \hlfunctioncall{assign}(newdtf, \hlfunctioncall{makeCorp}(corp), pos = .GlobalEnv)
+\}
+
+\hlfunctioncall{head}(google2006)[5:10]
+\end{alltt}
+\begin{verbatim}
+##      Certified_Date        Denied_Date Employer_Name        Employer_Address_1
+## 6238                1/24/2006 22:19:16   GOOGLE INC. 1600 AMPHITHEATRE PARKWAY
+## 6261                1/24/2006 22:26:39   GOOGLE INC. 1600 AMPHITHEATRE PARKWAY
+## 6303                1/24/2006 22:26:41   GOOGLE INC. 1600 AMPHITHEATRE PARKWAY
+## 6323                1/24/2006 22:26:42   GOOGLE INC. 1600 AMPHITHEATRE PARKWAY
+## 6619                1/24/2006 22:26:44   GOOGLE INC. 1600 AMPHITHEATRE PARKWAY
+## 6637                1/24/2006 22:26:45   GOOGLE INC. 1600 AMPHITHEATRE PARKWAY
+##      Employer_Address_2 Employer_City
+## 6238                    MOUNTAIN VIEW
+## 6261                    MOUNTAIN VIEW
+## 6303                    MOUNTAIN VIEW
+## 6323                    MOUNTAIN VIEW
+## 6619                    MOUNTAIN VIEW
+## 6637                    MOUNTAIN VIEW
+\end{verbatim}
+\begin{alltt}
+\hlfunctioncall{head}(sun2006)[5:10]
+\end{alltt}
+\begin{verbatim}
+##      Certified_Date        Denied_Date          Employer_Name Employer_Address_1
+## 296                 12/2/2005 13:21:20 SUN MICROSYSTEMS, INC. 7788 GATEWAY BLVD.
+## 3219                                   SUN MICROSYSTEMS, INC. 7788 GATEWAY BLVD.
+## 7799                1/31/2006 18:06:48 SUN MICROSYSTEMS, INC. 7788 GATEWAY BLVD.
+## 8822                 2/3/2006 10:41:16 SUN MICROSYSTEMS, INC. 7788 GATEWAY BLVD.
+## 8874                 2/3/2006 15:15:54 SUN MICROSYSTEMS, INC. 7788 GATEWAY BLVD.
+## 9301                 2/6/2006 12:36:45 SUN MICROSYSTEMS, INC. 7788 GATEWAY BLVD.
+##      Employer_Address_2 Employer_City
+## 296      M/S UNWK18-303        NEWARK
+## 3219        BUILDING 18        NEWARK
+## 7799        BUILDING 18        NEWARK
+## 8822        BUILDING 18        NEWARK
+## 8874        BUILDING 18        NEWARK
+## 9301        BUILDING 18        NEWARK
+\end{verbatim}
+\begin{alltt}
+\hlfunctioncall{head}(intel2006)[5:10]
+\end{alltt}
+\begin{verbatim}
+##            Certified_Date         Denied_Date     Employer_Name
+## 1767                      12/22/2005 11:41:07 INTEL CORPORATION
+## 7465                       1/27/2006 15:30:23 INTEL CORPORATION
+## 7478                       1/30/2006 13:45:12 INTEL CORPORATION
+## 12787 12/15/2005 14:54:30                     INTEL CORPORATION
+## 17480  1/30/2006 10:43:30                     INTEL CORPORATION
+## 18502                      3/10/2006 15:45:16 INTEL CORPORATION
+##               Employer_Address_1 Employer_Address_2 Employer_City
+## 1767  2200 MISSION COLLEGE BLVD.                      SANTA CLARA
+## 7465  2200 MISSION COLLEGE BLVD.                      SANTA CLARA
+## 7478  2200 MISSION COLLEGE BLVD.                      SANTA CLARA
+## 12787 2200 MISSION COLLEGE BLVD.                      SANTA CLARA
+## 17480 2200 MISSION COLLEGE BLVD.                      SANTA CLARA
+## 18502 2200 MISSION COLLEGE BLVD.                      SANTA CLARA
+\end{verbatim}
+\begin{alltt}
+
+\hlcomment{# for professional list iteratively}
+prof_list <- \hlfunctioncall{c}(\hlstring{"Software Engineer"}, \hlstring{"se"}, \hlstring{"Programmer"}, \hlstring{"prg"}, \hlstring{"Electronics Engineer"}, \hlstring{"ee"})
+
+makeProf <- \hlfunctioncall{function}(Prof) \{
+    \hlfunctioncall{return}(\hlfunctioncall{subset}(all2006, Prevailing_Wage_Job_Title == Prof))
+\}
+
+\hlfunctioncall{for} (i in 1:(\hlfunctioncall{length}(prof_list)/2)) \{
+    prof <- prof_list[2 * i - 1]
+    newdtf <- \hlfunctioncall{paste}(prof_list[2 * i], \hlstring{"2007"}, sep = \hlstring{""})
+    \hlfunctioncall{assign}(newdtf, \hlfunctioncall{makeProf}(prof), pos = .GlobalEnv)
+\}
+\hlfunctioncall{head}(2007)
+\end{alltt}
+\begin{verbatim}
+## [1] 2007
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+
+
+
+
+
+\section{Metainfo}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{sessionInfo}()
+\end{alltt}
+\begin{verbatim}
+## R version 2.15.1 (2012-06-22)
+## Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+## [1] codetools_0.2-8 knitr_1.1       vimcom_0.9-7    setwidth_1.0-3 
+## 
+## loaded via a namespace (and not attached):
+## [1] digest_0.6.3   evaluate_0.4.3 formatR_0.7    stringr_0.6.2  tools_2.15.1
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{library}(knitr)
+\hlfunctioncall{knit}(\hlstring{"salaryStudy.Rnw"})  # compile to tex
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: duplicated label 'setup'}}\begin{alltt}
+\hlfunctioncall{purl}(\hlstring{"salaryStudy.Rnw"}, documentation = 0)  # extract R code only
+\hlfunctioncall{knit2pdf}(\hlstring{"salaryStudy.Rnw"})
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: duplicated label 'setup'}}\end{kframe}
+\end{knitrout}
+
+
+\end{document}
+
